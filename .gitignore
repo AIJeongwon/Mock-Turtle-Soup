@@ -1,3 +1,4 @@
 mts_sqlite.db
 secret_key.json
 venvs/
+__pycache__
