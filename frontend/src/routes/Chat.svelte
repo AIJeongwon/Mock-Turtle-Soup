@@ -8,13 +8,13 @@
 	let error = {detail:[]}
 
     let current = [];
-    let timer = 0;
+    let data_index = 0;
     let current_index = 0;
 
     function readingTime(text) {
         const wps = 225 / 60;
         const words = text.trim().split(/\s+/).length;
-        const time = Math.ceil((words / wps) * 1000);
+        const time = Math.ceil((words / wps) * 2000);
         return time;
     }
 
@@ -34,10 +34,12 @@
 
 	function run() {
 		if (data[current_index].text === "") return;
-		data[current_index].ready= true;
-		current.push(data[current_index++]); 
-		current = current;
-		requestAnimationFrame(run)   
+    	const delay = data[data_index].isolateDelay;  // 메시지마다 다른 지연 시간
+		current.push(data[data_index++]);
+		current = current
+    	setTimeout(() => {
+			current[current_index++].ready = true                                                                     
+    	}, delay);
 	}
 
     function trigger() {
@@ -54,10 +56,9 @@
 		trigger()
 		fastapi('post', url, params, 
             (json) => {
-				data[current_index].text = json
+				data[data_index].text = json
 				query = ''
 				trigger()
-				console.log(current)
             },
             (err_json) => {
                 error = err_json
