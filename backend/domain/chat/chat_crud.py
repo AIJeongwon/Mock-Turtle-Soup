@@ -38,7 +38,7 @@ generation_config = {
 model = genai.GenerativeModel(
     model_name="gemini-1.5-flash",
     generation_config=generation_config,
-    safety_settings = safety_setting,
+    safety_settings=safety_setting,
     # See https://ai.google.dev/gemini-api/docs/safety-settings
 )
 

@@ -2,6 +2,7 @@
 	import { onMount } from "svelte";
 	import { fade, fly } from "svelte/transition";
 	import { spring } from "svelte/motion";
+	import { marked } from "marked";
 	import BouncingDots from "./BouncingDots.svelte";
 
 	export let who = "you";
@@ -50,7 +51,7 @@
 		{/if}
 		<div class="text-box" class:show={_ready} bind:clientHeight={el}>
 			<p>
-				{text}
+				{@html marked.parse(text)}
 			</p>
 		</div>
 	</div>
