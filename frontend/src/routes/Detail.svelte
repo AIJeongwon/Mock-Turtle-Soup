@@ -1,5 +1,4 @@
 <script>
-    import { get } from "svelte/store";
     import { link, push } from 'svelte-spa-router'
     import fastapi from "../lib/api"
     import { is_login, username } from "../lib/store"

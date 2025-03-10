@@ -38,7 +38,7 @@
 </script>
 
 <div class="container">
-    <h5 class="my-3 border-bottom pb-2">질문 수정</h5>
+    <h5 class="my-3 border-bottom pb-2">문제 수정</h5>
     <form method="post" class="my-3">
         <div class="mb-3">
             <label for="subject">제목</label>

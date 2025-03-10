@@ -1,7 +1,8 @@
 <script>
-    import { onMount, tick } from "svelte";
 	import fastapi from "../lib/api"
     import ChatBox from "./ChatBox.svelte";
+	import { is_login } from "../lib/store"
+    import { fas } from "@fortawesome/free-solid-svg-icons";
 
     let data = [];
 	let query = '';
@@ -46,6 +47,16 @@
         requestAnimationFrame(run);
     }
 
+	function start_gemini() {
+		let url = "/api/chat/start"
+		accumulate("", "gemini")
+		fastapi('get', url, {}, 
+			(json) => {
+				data[data_index].text = json
+				trigger()
+			})
+	}
+
     function query_gemini() {
 		let url = "/api/chat/query"
         let params = {
@@ -65,6 +76,8 @@
             }
         )
     }
+
+	start_gemini()
 </script>
 
 <div class="card card-danger direct-chat direct-chat-danger">
@@ -76,9 +89,11 @@
 </div>
 <div class="card">
 	<div class="input-group">
-		<input type="text" placeholder="Type Message ..." class="form-control" bind:value={query}>
+		<input type="text" placeholder="Type Message ..." class="form-control"
+		 disabled={$is_login ? "" : "disabled"} bind:value={query}>
 		<span class="input-group-append">
-			<button type="button" class="btn btn-primary" on:click="{query_gemini}">Send</button>
+			<button type="button" class="btn btn-primary" disabled={$is_login ? "" : "disabled"}
+			on:click="{query_gemini}">Send</button>
 		</span>
 	</div>
 </div>
