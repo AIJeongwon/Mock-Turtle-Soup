@@ -184,14 +184,14 @@
     </div>
     {/each}
     <!-- 댓글 등록 -->
-    <Error error={error} />
+    <Error error={error}></Error>
     <form method="post" class="my-3">
         <div class="mb-3">
             <textarea rows="10" bind:value={content} 
                 disabled={$is_login ? "" : "disabled"}
-                class="form-control" />
+                class="form-control"></textarea>
         </div>
         <input type="submit" value="답변등록" class="btn btn-primary {$is_login ? '' : 'disabled'}" 
-            on:click="{post_comment}" />
+            on:click="{post_comment}">
     </form>
 </div>

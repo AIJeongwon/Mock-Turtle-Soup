@@ -4,8 +4,10 @@ Install the Google AI Python SDK
 $ pip install google-generativeai
 """
 
-import os
+import json
 import google.generativeai as genai
+
+from domain.chat.chat_schema import UserQuery
 
 safety_setting=[
         {
@@ -21,7 +23,9 @@ safety_setting=[
             "threshold": "BLOCK_ONLY_HIGH",
         },
     ]
-genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
+
+with open('./secret_key.json') as f:
+    genai.configure(api_key=json.load(f)['API_key'])
 
 # Create the model
 generation_config = {
@@ -29,13 +33,12 @@ generation_config = {
     "top_p": 0.95,
     "top_k": 64,
     "max_output_tokens": 8192,
-    "response_mime_type": "text/plain",
 }
 
 model = genai.GenerativeModel(
     model_name="gemini-1.5-flash",
     generation_config=generation_config,
-    safety_settings = safety_setting
+    safety_settings = safety_setting,
     # See https://ai.google.dev/gemini-api/docs/safety-settings
 )
 
@@ -68,6 +71,21 @@ chat_session = model.start_chat(
         {
             "role": "user",
             "parts": [
+                "안내문구는 위의 글을 그대로 보여주어야 합니다.",
+            ],
+        },
+        {
+            "role": "model",
+            "parts": [
+                "네, 알겠습니다.",
+            ],
+        },
+    ]
+)
+"""
+{
+            "role": "user",
+            "parts": [
                 "문제는 이거로 주면 돼. 욕실에서 샤워 하고 있는데, 주방 쪽에서 비명소리가 들렸다. 놀란 나는 대충 타올을 걸치고 서둘러 주방으로 나갈 수 밖에 없었다. 복면을 쓴 사람은 나를 보자마자 후다닥 창문 밖으로 뛰어 나가 버렸고 나는 활짝 열린 창문을 바라보며 새파랗게 질린채 주저앉았다.",
             ],
         },
@@ -89,17 +107,13 @@ chat_session = model.start_chat(
                 "네",
             ],
         },
-    ]
-)
+"""
 
-response = chat_session.send_message("시작")
+def start_gemini():
+    response = chat_session.send_message("시작!")
+    return response.text
 
-print(response.text)
 
-while True:
-    user_query = input()
-    if user_query == "정지":
-        break
-    print(f'[사용자]: {user_query}')   
-    response = chat_session.send_message(user_query)
-    print(f'[모델]: {response.text}')
+def query_gemini(user_query: UserQuery):
+    response = chat_session.send_message(user_query.content)
+    return response.text

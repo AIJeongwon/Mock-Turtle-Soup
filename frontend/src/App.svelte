@@ -8,6 +8,7 @@
   import UserLogin from "./routes/UserLogin.svelte"
   import QuestionModify from "./routes/QuestionModify.svelte"
   import CommentModify from "./routes/CommentModify.svelte"
+  import Chat from "./routes/Chat.svelte"
 
   const routes = {
     '/': Home,
@@ -17,6 +18,7 @@
     '/user-login': UserLogin,
     '/question-modify/:question_id': QuestionModify,
     '/comment-modify/:comment_id': CommentModify,
+    '/chat' : Chat,
   }
 </script>
 
