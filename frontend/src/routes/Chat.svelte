@@ -7,6 +7,7 @@
 	let current = []
 	let query = ''
 	let _api_key = ''
+	let regex = /^[a-z | A-Z | ~!@#$%^&*()_+|<>?:{}]/
 	let error = {detail:[]}
 
     let data_index = 0
@@ -19,9 +20,13 @@
 			$api_key = ''
 		}
 		else {
-			is_saved = true
-			$api_key = _api_key
-			start_gemini()
+			if (regex.test(_api_key)) {
+				is_saved = true
+				$api_key = _api_key
+				start_gemini()
+			}
+			else
+				console.log("API Key validation error!")
 		}
 	}
 
