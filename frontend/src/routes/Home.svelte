@@ -3,7 +3,6 @@
     import { link } from "svelte-spa-router"
     import { page, is_login, keyword } from "../lib/store";
     import moment from "moment/min/moment-with-locales"
-    import { get } from "svelte/store";
     moment.locale('ko')
 
     let question_list = []
