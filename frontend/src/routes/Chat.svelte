@@ -3,6 +3,8 @@
     import ChatBox from "./ChatBox.svelte"
 	import { is_login, api_key } from "../lib/store"
 
+	export let params = {}
+
     let data = []
 	let current = []
 	let query = ''
@@ -10,6 +12,7 @@
 	let regex = /^[a-z | A-Z | ~!@#$%^&*()_+|<>?:{}]/
 	let error = {detail:[]}
 
+	let question_id = params.question_id
     let data_index = 0
     let current_index = 0
 	let is_saved = ($api_key !== "" )
@@ -66,7 +69,7 @@
     }
 
 	function start_gemini() {
-		let url = "/api/chat/start"
+		let url = "/api/chat/" + question_id + "/start"
 		let params = {
 			key: $api_key
 		}
@@ -79,7 +82,7 @@
 	}
 
     function query_gemini() {
-		let url = "/api/chat/query"
+		let url = "/api/chat/" + question_id + "/query"
         let params = {
             content: query
         }

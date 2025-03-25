@@ -18,7 +18,7 @@
     '/user-login': UserLogin,
     '/question-modify/:question_id': QuestionModify,
     '/comment-modify/:comment_id': CommentModify,
-    '/chat' : Chat,
+    '/chat/:question_id' : Chat,
   }
 </script>
 

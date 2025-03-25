@@ -106,6 +106,12 @@
             )
         }
     }
+
+    function start_chat(_question_id) {
+        if(window.confirm('바다거북스프를 시작하시겠습니까?')) {
+            push('/chat/' + question_id)
+        }
+    }
 </script>
 
 <div class="container my-3">
@@ -142,6 +148,8 @@
                     추천
             <span class="badge rounded-pill bg-success">{ question.voter.length }</span>
         </button>
+        <button class="btn btn-sm btn-outline-secondary"
+            on:click={() => start_chat(question.id)}>바다거북스프!</button>
         {#if question.user && $username === question.user.username }
         <a use:link href="/question-modify/{question.id}" 
             class="btn btn-sm btn-outline-secondary">수정</a>
